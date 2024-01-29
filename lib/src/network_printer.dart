@@ -8,7 +8,8 @@
 
 import 'dart:io';
 import 'dart:typed_data' show Uint8List;
-import 'package:esc_pos_utils/esc_pos_utils.dart';
+// import 'package:esc_pos_utils/esc_pos_utils.dart';
+import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
 import 'package:image/image.dart';
 import './enums.dart';
 
@@ -64,11 +65,12 @@ class NetworkPrinter {
     bool containsChinese = false,
     int? maxCharsPerLine,
   }) {
-    _socket.add(_generator.text(text,
+    var generate = _generator.text(text,
         styles: styles,
         linesAfter: linesAfter,
         containsChinese: containsChinese,
-        maxCharsPerLine: maxCharsPerLine));
+        maxCharsPerLine: maxCharsPerLine);
+    _socket.add(generate);
   }
 
   void setGlobalCodeTable(String codeTable) {
@@ -157,7 +159,7 @@ class NetworkPrinter {
   void qrcode(
     String text, {
     PosAlign align = PosAlign.center,
-    QRSize size = QRSize.Size4,
+    QRSize size = QRSize.size4,
     QRCorrection cor = QRCorrection.L,
   }) {
     _socket.add(_generator.qrcode(text, align: align, size: size, cor: cor));
